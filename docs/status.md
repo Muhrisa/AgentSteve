@@ -4,7 +4,7 @@ title:	Status
 ---
 
 ## Video Summary
-___INSERT HERE___
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Dd0KOZKiN7k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Summary
 ArchitectSteve is a tool that takes a 2D image provided by the user and constructs a replica of the building in Minecraft but in 3D form. Steve, our intelligent “agent” as we call our tool takes the image and processes that image into a series of what we loosely will call coordinates, making it easier to work in Malmo Minecraft, but can be seen as the list of vertices that determine the shape of the object. This subroutine is made possible using the external OpenCV shape detection resource from the pyimagesearch website. The result is a 3D diamond block replica, in the Minecraft world environment, of the 2D building image that was “uploaded” to ArchitectSteve. Of course, due to the height restriction of 256 blocks that exists in Minecraft due to the fact that the Minecraft world is made of 16x16x256 'chunks’, we would resize the image so that the replicated structure would not be cutoff. The 2D building-view image also gets translated in order for the resulting replica to be perceived as having depth in Minecraft, thus having a 3D pop-up structure.
