@@ -14,13 +14,13 @@ We started off by using OpenCV’s shape contouring and detection functions. Ope
 
 Once we finally got a 2D object into Minecraft, we realized that the objects were being made upside down, we figured that an easy solution to this issue was to simply pass in upside down images into OpenCV.
 
-![BW](https://i.imgur.com/hRKaQGf.png)
+![BW](https://i.imgur.com/Plzw845.png)
 ![2dPic](https://i.imgur.com/eJpJmCv.png)
 
 Next, we thought about how we could turn our 2D object into 3D object in Minecraft.
 We realized that if a building was symmetrical all around then by expanding the corners of the 2D object, the result would be a 3D building.  We made this possible by finding the corner Y coordinates into an array. We would then build for z in range length of Y corner arrays. For each z, the section of the 2D array that was less than the current Y from the Y corners array would get built, which leads the 3D construction of 2D models. 
 
-![sideOne](https://i.imgur.com/Plzw845.png)
+![sideOne](https://i.imgur.com/nYl1KPN.png)
 ![sideTwo](https://i.imgur.com/kqPHHhJ.png)
 
 
