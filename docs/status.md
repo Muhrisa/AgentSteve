@@ -10,6 +10,20 @@ title:	Status
 ArchitectSteve is a tool that takes a 2D image provided by the user and constructs a replica of the building in Minecraft but in 3D form. Steve, our intelligent “agent” as we call our tool takes the image and processes that image into a series of what we loosely will call coordinates, making it easier to work in Malmo Minecraft, but can be seen as the list of vertices that determine the shape of the object. This subroutine is made possible using the external OpenCV shape detection resource from the pyimagesearch website. The result is a 3D diamond block replica, in the Minecraft world environment, of the 2D building image that was “uploaded” to ArchitectSteve. Of course, due to the height restriction of 256 blocks that exists in Minecraft due to the fact that the Minecraft world is made of 16x16x256 'chunks’, we would resize the image so that the replicated structure would not be cutoff. The 2D building-view image also gets translated in order for the resulting replica to be perceived as having depth in Minecraft, thus having a 3D pop-up structure.
 
 ## Approach
+We started off by using OpenCV’s shape contouring and detection functions. OpenCV recognizes shapes due to the difference in contrast, which is why we decided to pass in completely black and white photos. We initially thought of breaking down the buildings into shapes and using OpenCV’s shape recognition, but we later realized that OpenCV can return the pixel coordinates for the perimeter of any polygon using the findContours function. We also. We created a getArea() function using OpenCV’s pointPolygonTest() To test each pixel in the image and determine if those points are or are not within the shape. getArea() thus returns every coordinate where a block should be placed in the Minecraft world as a 2D object.
+
+Once we finally got a 2D object into Minecraft, we realized that the objects were being made upside down, we figured that an easy solution to this issue was to simply pass in upside down images into OpenCV.
+
+![BW](https://i.imgur.com/hRKaQGf.png)
+![2dPic](https://i.imgur.com/5U1sEdg.png)
+
+Next, we thought about how we could turn our 2D object into 3D object in Minecraft.
+We realized that if a building was symmetrical all around then by expanding the corners of the 2D object, the result would be a 3D building.  We made this possible by finding the corner Y coordinates into an array. We would then build for z in range length of Y corner arrays. For each z, the section of the 2D array that was less than the current Y from the Y corners array would get built, which leads the 3D construction of 2D models. 
+
+![sideOne](https://i.imgur.com/hdj7lkq.png)
+![sideTwo](https://i.imgur.com/auORy3A.png)
+
+
 ___INSERT HERE___
 
 ## Evaluation
