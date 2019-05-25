@@ -2,6 +2,8 @@
 layout: default
 title:  Home
 ---
+## Video Summary
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Dd0KOZKiN7k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Who is Steve?
 Steve had spent his whole life successful maze critic. Day after day, Steve spent his time running from maze to maze, occasionally spending time on his hobbies of crafting and street fighting, but it was never long before he was forced to go off and review the next maze. No matter how many times he made it through or got stuck it seemed that there was never a shortage of people eager to have Steve test out their mazes.
