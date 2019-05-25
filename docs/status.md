@@ -20,7 +20,7 @@ Once we finally got a 2D object into Minecraft, we realized that the objects wer
 Next, we thought about how we could turn our 2D object into 3D object in Minecraft.
 We realized that if a building was symmetrical all around then by expanding the corners of the 2D object, the result would be a 3D building.  We made this possible by finding the corner Y coordinates into an array. We would then build for z in range length of Y corner arrays. For each z, the section of the 2D array that was less than the current Y from the Y corners array would get built, which leads the 3D construction of 2D models. 
 
-![sideOne](https://i.imgur.com/nYl1KPN.png)
+![sideOne](https://i.imgur.com/Plzw845.png)
 ![sideTwo](https://i.imgur.com/kqPHHhJ.png)
 
 
