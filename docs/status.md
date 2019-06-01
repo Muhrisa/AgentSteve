@@ -23,9 +23,6 @@ We realized that if a building was symmetrical all around then by expanding the 
 ![sideOne](https://i.imgur.com/nYl1KPN.png)
 ![sideTwo](https://i.imgur.com/kqPHHhJ.png)
 
-
-___INSERT HERE___
-
 ## Evaluation
 Our evaluation criteria is primarily focused on the qualitative, measured by the quality, size and appearance  of the building our algorithm created. At its essence we are trying to answer the following evaluation question: does the 3D Minecraft representation of the building look like the original 2D image of the building. To assess this part of the evaluation we perform a simple visual comparison between the 3D Minecraft diamond block replica and the original 2D image. The dimension and depth are two of the criteria we focused on, in order to create a much more realistic structure. Through the peer grading, we will hopefully gather feedback from four other students on our accuracy of the building replication.
 
