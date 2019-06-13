@@ -13,6 +13,9 @@ except:
 import sys
 import time
 from PIL import Image
+import Grab_and_Cut as gc
+import colors
+import numpy as np
 
 
 
@@ -72,8 +75,8 @@ def doXML(area):
                 time.sleep(2)
 
     # Loop until mission starts:
-    print ("Waiting for the mission to start ",)
-    world_state = agent_host.getWorldState()
+    print ("Waiting for the mission to start ",
+    world_state = agent_host.getWorldState())
     while not world_state.has_mission_begun:
         sys.stdout.write(".")
         time.sleep(0.1)
@@ -95,6 +98,25 @@ def doXML(area):
     print()
     print ("Mission ended")
 
+def closestColor(pixel, colorDict):
+    resultColor = "WHITE"
+    minDif = float("inf")
+    for wool, colorValue in colorDict.items():
+        dif = np.sqrt((pixel[0]-colorValue[0])**2 + (pixel[1]-colorValue[1])**2 + (pixel[2]-colorValue[2])**2)
+        if (dif < minDif):
+            resultColor = wool
+            minDif = dif
+    print(resultColor, pixel)
+    #difList.append(minDif)
+    return resultColor
+
+#from https://github.com/Alex561/Sketchy-AI/blob/master/minecraftBuilder.py
+def pick_string(x_num, y_num, z_num, bestColor):
+    if bestColor in colors.woolList:
+        return '<DrawBlock x="{0}" y="{1}" z="{2}" type="wool" colour="{3}"/>\n'.format(x_num, y_num+7, z_num, bestColor)
+    else:
+        return '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(x_num, y_num+7, z_num, bestColor)
+
 
 def placeBottom(area):
         
@@ -106,10 +128,21 @@ def placeBottom(area):
         yback = counting(cord, True)
         returnString = ""
         num = len(ylist)*div
-        for c in area:
+        z = 0
+        #color_fit = closestColor(pixle_list[c[0]][c[1]], colors.colorDict)
+        """for c in area:
             for z in range(1,len(ylist)*div):
                 if c[1] <= ylist[z//div]:
-                    returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z, "diamond_block")
+                    returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z, "diamond_block")""" 
+        for c in area:
+            color_fit = closestColor(pixle_list[c[0]+cY][c[1]+cX], colors.colorDict)
+            returnString += pick_string(c[0], c[1], (len(ylist)*div)//2, color_fit)
+            #returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, (len(ylist)*div)//2, color_fit)
+            for z in range(1,len(ylist)*div):
+                if c[1] <= ylist[z//div]:
+                    #color_fit = closestColor(pixle_list[c[0]][c[1]], colors.colorDict)
+                    returnString += pick_string(c[0], c[1], z, color_fit)
+                    #returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z, color_fit)
         """for c in area:
             for z in range(len(add)*div):
                 if c[1] <= add[z//div]:
@@ -162,13 +195,19 @@ def black_and_white_dithering(input_image_path, output_image_path, dithering=Fal
 # load the image and resize it to a smaller factor so that
 # the shapes can be approximated better
 #black_and_white_dithering('one.png', "two.png")
-divNum = 10
-image = cv2.imread("esb2.png")
-#image = cv2.imread("ch2.png")
-#divNum = 8
+#divNum = 10
+#image = cv2.imread("esb2.png")
+#pixle_list = gc.image_change("testing1.png")
+divNum = 8
+pixle_list = gc.image_change("empire_state.png")
+resized = cv2.imread("bw_flipped.jpg")
+for l in pixle_list:
+    print(l)
 
-resized = imutils.resize(image, width=300)
-ratio = image.shape[0] / float(resized.shape[0])
+image = resized
+#resized = imutils.resize(image, width=300)
+#ratio = image.shape[0] / float(resized.shape[0])
+ratio = 1
 
 # convert the resized image to grayscale, blur it slightly,
 # and threshold it
@@ -180,7 +219,7 @@ thresh = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY)[1]
 # shape detector
 cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
 	cv2.CHAIN_APPROX_SIMPLE)
-start = cnts[0][0][0][0]
+start = cnts[0][0]
 cnts = imutils.grab_contours(cnts)
 sd = ShapeDetector()
 
@@ -199,6 +238,7 @@ for c in cnts:
 	cord = sd.getPoints(c, start)
 	#imageWidth = 
 	ar = shrink(sd.getArea(c, image.shape[0], image.shape[1], start))
+    #ar = shrink(sd.getArea(c, image.shape[0], image.shape[1], start))
 	#print(area)
 	#print(len(cord))
 	#print("LEN: ",len(ar))
@@ -227,11 +267,3 @@ def placeTop():
         for c in area:
                 returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, 0, "diamond_block")
         return returnString
-
-
-
- 
-
- 
-    
-        
