@@ -16,6 +16,8 @@ from PIL import Image
 import Grab_and_Cut as gc
 import colors
 import numpy as np
+import math
+from scipy.interpolate import interp1d
 
 
 
@@ -101,16 +103,22 @@ def doXML(area):
 def closestColor(pixel, colorDict):
     resultColor = "WHITE"
     minDif = float("inf")
+
     for wool, colorValue in colorDict.items():
         dif = np.sqrt((pixel[0]-colorValue[0])**2 + (pixel[1]-colorValue[1])**2 + (pixel[2]-colorValue[2])**2)
         if (dif < minDif):
             resultColor = wool
             minDif = dif
-    print(resultColor, pixel)
+
+    #print(resultColor, pixel)
     #difList.append(minDif)
     return resultColor
 
 #from https://github.com/Alex561/Sketchy-AI/blob/master/minecraftBuilder.py
+
+
+
+
 def pick_string(x_num, y_num, z_num, bestColor):
     if bestColor in colors.woolList:
         return '<DrawBlock x="{0}" y="{1}" z="{2}" type="wool" colour="{3}"/>\n'.format(x_num, y_num+7, z_num, bestColor)
@@ -118,8 +126,7 @@ def pick_string(x_num, y_num, z_num, bestColor):
         return '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(x_num, y_num+7, z_num, bestColor)
 
 
-def placeBottom(area):
-        
+def placeBottom(area):      #area returned from shrink()
         div = 1
         ylist = counting(cord)
         add = counting(cord, True)
@@ -133,16 +140,38 @@ def placeBottom(area):
         """for c in area:
             for z in range(1,len(ylist)*div):
                 if c[1] <= ylist[z//div]:
-                    returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z, "diamond_block")""" 
+                    returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z, "diamond_block")"""
+
+        # xratio = max(list(area), lambda i: i[0])[0] // pixle_list.shape[0]
+        # yratio = max(list(area), lambda i: i[1])[1] // pixle_list.shape[1]
+        np.set_printoptions(linewidth=np.inf)
+        # for c,i in enumerate(pixle_list):
+        #     print(i.tolist())
+        #     print(c,"\n")
+        xrange = (min(ogArea)[0], max(ogArea)[0])
+        yrange = (min(ogArea, key=lambda y: y[1])[1], max(ogArea, key=lambda y: y[1])[1])
+        xdif = xrange[1]-xrange[0]
+        ydif = yrange[1]-yrange[0]
+        cxrange = (min(list(area))[0], max(list(area))[0])
+        cyrange = (min(list(area), key=lambda y: y[1])[1], max(list(area), key=lambda y: y[1])[1])
+        cxdif = cxrange[1] - cxrange[0]
+        cydif = cyrange[1] - cyrange[0]
+        xt = interp1d([cxrange[0], cxrange[1]], [xrange[0], xrange[1]])
+        yt = interp1d([cyrange[0], cyrange[1]], [yrange[0], yrange[1]])
         for c in area:
-            color_fit = closestColor(pixle_list[c[0]+cY][c[1]+cX], colors.colorDict)
+            print("ranges:", xrange, yrange, cxrange, cyrange)
+            print(pixle_list[(c[0]+yrange[0])][c[1] + xrange[0]], c[0], c[1])
+            x = int(yt(c[1]))
+            y = int(xt(c[0]))
+            if(c[1] == cyrange[0]):
+                x = yrange[0]
+            elif (c[1] == cyrange[1]):
+                x = yrange[1]
+            color_fit = closestColor(pixle_list[x][y], colors.colorDict)
             returnString += pick_string(c[0], c[1], (len(ylist)*div)//2, color_fit)
-            #returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, (len(ylist)*div)//2, color_fit)
             for z in range(1,len(ylist)*div):
                 if c[1] <= ylist[z//div]:
-                    #color_fit = closestColor(pixle_list[c[0]][c[1]], colors.colorDict)
                     returnString += pick_string(c[0], c[1], z, color_fit)
-                    #returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z, color_fit)
         """for c in area:
             for z in range(len(add)*div):
                 if c[1] <= add[z//div]:
@@ -150,11 +179,6 @@ def placeBottom(area):
                     #if z != 0:
                         #returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z+(len(ylist)*3), "diamond_block")"""
 
-            #for z2 in range(len(ylist)*3,len(ylist)*3):
-                #if c[1] <= yback[z//3]:
-                    #returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z2, "diamond_block")
-            #returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, 0, "diamond_block")
-        #print("DONEEE")
         return returnString
 
 def shrink(pts):
@@ -179,6 +203,7 @@ def counting(pts, rev = False):
                         Ylist.append(y//divNum)
         Ylist.sort(reverse = rev)
         return Ylist
+
 def black_and_white_dithering(input_image_path, output_image_path, dithering=False):
     color_image = Image.open(input_image_path)
     if dithering:
@@ -186,6 +211,10 @@ def black_and_white_dithering(input_image_path, output_image_path, dithering=Fal
     else:
         bw = color_image.convert('1', dither=Image.NONE)
     bw.save(output_image_path)
+
+
+
+
 # construct the argument parse and parse the arguments
 #ap = argparse.ArgumentParser()
 #ap.add_argument("-i", "--image", required=True,
@@ -199,10 +228,10 @@ def black_and_white_dithering(input_image_path, output_image_path, dithering=Fal
 #image = cv2.imread("esb2.png")
 #pixle_list = gc.image_change("testing1.png")
 divNum = 8
-pixle_list = gc.image_change("empire_state.png")
+pixle_list = gc.image_change("rs2.png")
 resized = cv2.imread("bw_flipped.jpg")
-for l in pixle_list:
-    print(l)
+# for l in pixle_list:
+#     print(l)
 
 image = resized
 #resized = imutils.resize(image, width=300)
@@ -229,41 +258,39 @@ for c in cnts:
 	# shape using only the contour
 	#for x in c:
                # print(x)
-	M = cv2.moments(c)
+    M = cv2.moments(c)
 
 	#d = M["m00"]
 	#for k,v in M.items():
                 #print(k, (v/d)*ratio)
-	total = c
-	cord = sd.getPoints(c, start)
-	#imageWidth = 
-	ar = shrink(sd.getArea(c, image.shape[0], image.shape[1], start))
+    total = c
+    cord = sd.getPoints(c, start)
+	#imageWidth =
+    ogArea = sd.getArea(c, image.shape[0], image.shape[1], start)
+    ar = shrink(ogArea)
+
     #ar = shrink(sd.getArea(c, image.shape[0], image.shape[1], start))
-	#print(area)
-	#print(len(cord))
-	#print("LEN: ",len(ar))
-	cX = int((M["m10"] / M["m00"]) * ratio)
-	cY = int((M["m01"] / M["m00"]) * ratio)
+	# print(ar)
+	# print(len(cord))
+	# print("LEN: ",len(ar))
+    cX = int((M["m10"] / M["m00"]) * ratio)
+    cY = int((M["m01"] / M["m00"]) * ratio)
 	#print(cX, cY)
-	shape = sd.detect(c)
+    shape = sd.detect(c)
 
 	# multiply the contour (x, y)-coordinates by the resize ratio,
 	# then draw the contours and the name of the shape on the image
-	c = c.astype("float")
-	c *= ratio
-	c = c.astype("int")
-	cv2.drawContours(image, [c], -1, (0, 255, 0), 2)
+    c = c.astype("float")
+    c *= ratio
+    c = c.astype("int")
+    cv2.drawContours(image, [c], -1, (0, 255, 0), 2)
 	#print(shape)
-	cv2.putText(image, shape, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX,
+    cv2.putText(image, shape, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX,
 		0.5, (255, 255, 255), 2)
 
 	# show the output image
-	cv2.imshow("Image", image)
-	cv2.waitKey(0)
-	doXML(ar)
+    cv2.imshow("Image", image)
+    cv2.waitKey(0)
+    # print(pixle_list.shape, len(ar))
+    doXML(ar)
 
-def placeTop():
-        returnString = ""
-        for c in area:
-                returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, 0, "diamond_block")
-        return returnString

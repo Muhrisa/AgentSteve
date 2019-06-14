@@ -1,6 +1,9 @@
 import numpy as np
 import imutils
 import cv2
+import PIL
+from PIL import Image
+
 
 def findSignificantContour(edgeImg):
     image, contours, hierarchy = cv2.findContours(
@@ -103,6 +106,7 @@ def image_change(pic):
     fimg=img.copy()
     fimg=cv2.flip(img,0)
     cv2.imwrite('bw_flipped.jpg', fimg)
+
     return cv2.flip(src,0)
 
     #print(image_to_array("testing1.png"))
