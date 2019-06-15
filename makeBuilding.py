@@ -19,7 +19,7 @@ import numpy as np
 import math
 from scipy.interpolate import interp1d
 
-
+image_file = "test.jpg"
 
 def doXML(area):
     missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -116,6 +116,26 @@ def closestColor(pixel, colorDict):
 
 #from https://github.com/Alex561/Sketchy-AI/blob/master/minecraftBuilder.py
 
+def getPixel(x,y):
+    num = math.sqrt(divNum)
+    r=0
+    g=0
+    b=0
+    count = 0
+    pts = [(-1,1), (0,1),(1,1), (-1,0), (0,0), (1,0), (-1,-1), (0,-1), (1,-1)]
+    for i in pts:
+        count += 1
+        xt = x+i[0]
+        yt = y+i[1]
+        if (not(yt >  0 and yt < pixle_list.shape[1])):
+            continue
+        if (not(xt >  0 and xt < pixle_list.shape[0])):
+            continue
+        r += pixle_list[xt][yt][0]
+        g += pixle_list[xt][yt][1]
+        b += pixle_list[xt][yt][2]
+
+    return[r//count,g//count,b//count]
 
 
 
@@ -163,11 +183,7 @@ def placeBottom(area):      #area returned from shrink()
             print(pixle_list[(c[0]+yrange[0])][c[1] + xrange[0]], c[0], c[1])
             x = int(yt(c[1]))
             y = int(xt(c[0]))
-            if(c[1] == cyrange[0]):
-                x = yrange[0]
-            elif (c[1] == cyrange[1]):
-                x = yrange[1]
-            color_fit = closestColor(pixle_list[x][y], colors.colorDict)
+            color_fit = closestColor(getPixel(x,y), colors.colorDict)
             returnString += pick_string(c[0], c[1], (len(ylist)*div)//2, color_fit)
             for z in range(1,len(ylist)*div):
                 if c[1] <= ylist[z//div]:
@@ -228,7 +244,7 @@ def black_and_white_dithering(input_image_path, output_image_path, dithering=Fal
 #image = cv2.imread("esb2.png")
 #pixle_list = gc.image_change("testing1.png")
 divNum = 8
-pixle_list = gc.image_change("rs2.png")
+pixle_list = gc.image_change(image_file)
 resized = cv2.imread("bw_flipped.jpg")
 # for l in pixle_list:
 #     print(l)
