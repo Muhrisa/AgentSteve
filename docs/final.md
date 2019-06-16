@@ -59,7 +59,7 @@ __Qualitative Evaluation:__ ArchitectSteve does not attempt to produce an exact 
 
 Our evaluation criteria is primarily focused on the qualitative factors, measured by the quality, size and appearance  of the building our algorithm created. To assess this part of the evaluation we perform a simple visual comparison between the 3D Minecraft colored block replica and the original 2D image. The dimension, depth, and color are three of the criteria we focused on, in order to create a much more realistic structure. As a result of the peer grading, we received positive feedback from other students solely on our accuracy of the building structure replication using only diamond blocks. 
 
-![Outline Extraction](images/outline 3 image.png)
+![Outline Extraction](https://imgur.com/a/AEuQLCa)
 
 __Quantitative Evaluation:__ The evaluation criteria also includes a quantitative assessment that is the focused on the extent of building images that it can successfully build replicas of. With the algorithm we have in place we are able to work with geometric structures that often resemble some kind of symmetry. We compare the results of asymmetrical building images and their replicas to symmetrical building images and the number of successful replicas is a lot higher for symmetrical structures.
 
