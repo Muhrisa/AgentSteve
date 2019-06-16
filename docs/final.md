@@ -32,6 +32,8 @@ __3.__ reduce the noise on the image by using median filters
 
 __4.__ run a contour detection subroutine over the edge detected image result, finding the largest, most siginificant outer-most contour
 
+__5.__ approximate contour to make a more accurate background and foreground differentiation 
+
 <img src="images/Samples/Colosium/col copy.jpg" width="450" height="300">
 
 In order to retrieve the RGB colors, we use the original image but first we flip the image. This is due to the fact that the objects were being built upside down in Minecraft whenever we passed the image in it's orginal upright orientation. Using this flipped image, we convert that image, using OpenCV, into a series of RGB values for each of the pixels in the image.
