@@ -4,7 +4,7 @@ title:	Final Report
 ---
 
 ## Video
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Dd0KOZKiN7k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/k5p1342nWVI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Summary
 ArchitectSteve is a tool that takes a photo of a building and constructs a 3D replica of it within the Minecraft environment. Our AI, Steve, processes the selected photo into an image matrix which is processed and then rendered into a 3D model approximating the structure. This subroutine is made possible using the external OpenCV shape detection resource from the pyimagesearch website. Using a filtering and processing pipeline in conjunction with the OpenCV library, we are able to extract an approximation of the buildings outline and thus subtract the background from the image through image segmentation and contouring.
