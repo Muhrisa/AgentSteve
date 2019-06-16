@@ -65,6 +65,8 @@ The crux of program is to develop an accuate outline on which the structure is t
 
 ![Color Comparison](https://i.imgur.com/PRtQjMp.png)
 
+![tower sample](https://i.imgur.com/zewl4L6.png)
+
 
 __Quantitative Evaluation:__ The evaluation criteria also includes a quantitative assessment that is the focused on the extent of building images that it can successfully build replicas of. With the algorithm we have in place we are able to work with geometric structures that often resemble some kind of symmetry. We compare the results of asymmetrical building images and their replicas to symmetrical building images and the number of successful replicas is a lot higher for symmetrical structures.
 
