@@ -33,8 +33,8 @@ Finally, after a lot of hard work and patience, Steve had made it! He began his 
 https://github.com/muhrisa/ArchitectSteve
 
 ## Other Resources Used
-Python Programming Language: it's easy to learn and use Python. https://www.python.org/downloads/
+__Python Programming Language:__ it's easy to learn and use Python. https://www.python.org/downloads/
 
-Malmo: a platform for Artificial Intelligence experimentation and research built on top of Minecraft. An essential part of this project so you don't have to build or install platform dependent code.
+__Malmo:__ a platform for Artificial Intelligence experimentation and research built on top of Minecraft. An essential part of this project so you don't have to build or install platform dependent code.
 https://github.com/Microsoft/malmo
 
