@@ -47,12 +47,6 @@ To assess this part of the evaluation we perform a simple visual comparison betw
 __Quantitative Evaluation:__ The evaluation criteria also includes a quantitative assessment that is the focused on the extent of building images that it can successfully build replicas of. With the algorithm we have in place we are able to work with geometric structures that often resemble some kind of symmetry. We compare the results of asymmetrical building images and their replicas to symmetrical building images and the number of successful replicas is a lot higher for symmetrical structures.
 
 ## Refrences
-__Deep Reinforcement Learning with Model Learning and Monte Carlo Tree Search in Minecraft:__ How to place blocks in Minecraft.
-
-https://arxiv.org/pdf/1803.08456.pdf
-
-https://thenextweb.com/artificial-intelligence/2018/03/23/watch-this-ai-figure-out-how-to-place-blocks-in-minecraft/
-
 __Imutils:__ image processing functions such as translation, rotation, resizing, skeletonization, sorting contours and detecting edges with OpenCV and Python 3.
 
 https://pypi.org/project/imutils/
