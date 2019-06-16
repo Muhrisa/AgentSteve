@@ -4,7 +4,7 @@ title:	Final Report
 ---
 
 ## Video
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Dd0KOZKiN7k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/k5p1342nWVI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Summary
 ArchitectSteve is a tool that takes a 2D image provided by the user and constructs a replica of the building in Minecraft but in 3D form. Steve, our intelligent “agent”, processes that image into an image matrix which can be translated and then rendered into the minecraft enviornment. This subroutine is made possible using the external OpenCV shape detection resource from the pyimagesearch website. ArchitectSteve processes the 2D image into a series of pixels (i.e., R{0-255} G{0-255} B{0-255}). These pixels are then translated into the Minecraft building block with the closest matching color. This process is aided by a dictionary of Minecraft blocks and associated colors (as seen and described from the website minecraft-ids.grahamedgecombe.com where the official names and coloring was taken from). After determining the approriate building block to use, ArichitectSteve displays the block at the appropriate coordinates in the Minecraft enviornment.
