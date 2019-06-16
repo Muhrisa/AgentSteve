@@ -20,6 +20,7 @@ import math
 from scipy.interpolate import interp1d
 
 image_file = "test_images/willis.jpg"
+isSymmetrical = True
 
 def doXML(area):
     missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -245,7 +246,6 @@ def mirror(image, str):
     for xcount, x in enumerate(newImage):
         for ycount, y in enumerate(x):
             x, y = mapSymmetricPixel(axis, xcount, ycount, im.shape)
-            print(x,y)
             newImage[xcount][ycount] = im[x][y]
 
     cv2.line(newImage, (axis, 0), (axis, 500), (255, 0, 0), 5)
@@ -254,7 +254,7 @@ def mirror(image, str):
     return newImage
 
 def mapSymmetricPixel(axis, x, y, shape):
-    if y < axis or x >= shape[1] or y >= shape[0]:
+    if y <= axis or x >= shape[0] or y >= shape[1]:
         return x,y
     return x, axis - (y - axis)
 
@@ -267,9 +267,9 @@ def mapSymmetricPixel(axis, x, y, shape):
 divNum = 8
 
 image1 = "bw_flipped.jpg"
-mirror(image1, "test_images/mirror.jpg")
-image1 = 'test_images/mirror.jpg'
-# gc.image_change('test_images/mirror.jpg')
+if isSymmetrical:
+    mirror(image1, "test_images/mirror.jpg")
+    image1 = 'test_images/mirror.jpg'
 resized = cv2.imread(image1)
 
 # resized = makeSymmetrical(image1)
