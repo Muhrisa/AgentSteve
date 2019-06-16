@@ -2,11 +2,13 @@
 layout: default
 title:  Home
 ---
-## Video Summary
+## First Video Summary
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Dd0KOZKiN7k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Summary
-ArchitectSteve is a tool that takes a 2D image provided by the user and constructs a replica of the building in Minecraft but in 3D form. Steve, our intelligent “agent” as we call our tool takes the image and processes that image into a series of what we loosely will call coordinates, making it easier to work in Malmo Minecraft, but can be seen as the list of vertices that determine the shape of the object. This subroutine is made possible using the external OpenCV shape detection resource from the pyimagesearch website. The result is a 3D diamond block replica, in the Minecraft world environment, of the 2D building image that was “uploaded” to ArchitectSteve. Of course, due to the height restriction of 256 blocks that exists in Minecraft due to the fact that the Minecraft world is made of 16x16x256 'chunks’, we would resize the image so that the replicated structure would not be cutoff. The 2D building-view image also gets translated in order for the resulting replica to be perceived as having depth in Minecraft, thus having a 3D pop-up structure.
+ArchitectSteve is a tool that takes a 2D image provided by the user and constructs a replica of the building in Minecraft but in 3D form. Steve, our intelligent “agent” as we call our tool takes the image and processes that image into a series of what we loosely will call coordinates, making it easier to work in Malmo Minecraft, but can be seen as the list of vertices that determine the shape of the object. This subroutine is made possible using the external OpenCV shape detection resource from the pyimagesearch website. The ArchitectSteve takes the 2D image and processes the image into a series of pixels (i.e., R{0-255} G{0-255} B{0-255}). In addition, we added a colors dictionary of possible Minecraft blocks as seen and described from the website minecraft-ids.grahamedgecombe.com where the official names and coloring was taken from. ArchitectSteve with the use of the colors dictionary to measure or estimate the similarity of each pixel from the 2D image that ArchitectSteve took and basically determine the closest Minecraft block type and color to use when creating the 3D structure.
+
+The result is a 3D appropriately colored block replica, in the Minecraft world environment, of the 2D building image that was “uploaded” to ArchitectSteve. Of course, due to the height restriction of 256 blocks that exists in Minecraft due to the fact that the Minecraft world is made of 16x16x256 'chunks’, we would resize the image so that the replicated structure would not be cutoff. The 2D building-view image also gets translated in order for the resulting replica to be perceived as having depth in Minecraft, thus having a 3D pop-up structure.
 
 ## Who is Steve?
 Steve had spent his whole life as a successful maze critic. Day after day, Steve spent his time running from maze to maze, occasionally spending time on his hobbies of crafting and street fighting, but it was never long before he was forced to go off and review the next maze. No matter how many times he made it through to the finish line or got stuck inside, it seemed that there was never a shortage of people eager to have Steve test out their mazes.
@@ -31,8 +33,8 @@ Finally, after a lot of hard work and patience, Steve had made it! He began his 
 https://github.com/muhrisa/ArchitectSteve
 
 ## Other Resources Used
-Python Programming Language: it's easy to learn and use Python. https://www.python.org/downloads/
+__Python Programming Language:__ it's easy to learn and use Python. https://www.python.org/downloads/
 
-Malmo: a platform for Artificial Intelligence experimentation and research built on top of Minecraft. An essential part of this project so you don't have to build or install platform dependent code.
+__Malmo:__ a platform for Artificial Intelligence experimentation and research built on top of Minecraft. An essential part of this project so you don't have to build or install platform dependent code.
 https://github.com/Microsoft/malmo
 
