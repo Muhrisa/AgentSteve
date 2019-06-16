@@ -19,7 +19,7 @@ import numpy as np
 import math
 from scipy.interpolate import interp1d
 
-image_file = "test_images/test3.jpg"
+image_file = "test_images/wh.jpg"
 pixle_list = gc.image_change(image_file)
 
 
@@ -158,27 +158,23 @@ def placeBottom(area):      #area returned from shrink()
 
         xrange = (min(ogArea)[0], max(ogArea)[0])
         yrange = (min(ogArea, key=lambda y: y[1])[1], max(ogArea, key=lambda y: y[1])[1])
-
-        xdif = xrange[1]-xrange[0]
-        ydif = yrange[1]-yrange[0]
         cxrange = (min(list(area))[0], max(list(area))[0])
         cyrange = (min(list(area), key=lambda y: y[1])[1], max(list(area), key=lambda y: y[1])[1])
-        cxdif = cxrange[1] - cxrange[0]
-        cydif = cyrange[1] - cyrange[0]
         xt = interp1d([cxrange[0], cxrange[1]], [xrange[0], xrange[1]])
         yt = interp1d([cyrange[0], cyrange[1]], [yrange[0], yrange[1]])
         for c in area:
             # print("ranges:", xrange, yrange, cxrange, cyrange)
-            print(pixle_list[(c[0]+yrange[0])][c[1] + xrange[0]], c[0], c[1])
+            # print(pixle_list[(c[0]+yrange[0])][c[1] + xrange[0]], c[0], c[1])
             x = int(yt(c[1]))
             y = int(xt(c[0]))
             color_fit = closestColor(getPixel(x,y), colors.colorDict)
+
             cyf = c[1] - cyrange[0]
             returnString += pick_string(c[0], cyf, (len(ylist)*div)//2, color_fit)
             for z in range(1,len(ylist)*div):
                 if cyf <= ylist[z//div]:
                     returnString += pick_string(c[0], cyf, z, color_fit)
-
+        print(returnString)
         return returnString
 
 def shrink(pts):
@@ -269,8 +265,8 @@ def mirror(image, str):
 divNum = 8
 
 image1 = "bw_flipped.jpg"
-mirror(image1, "test_images/mirror.jpg")
-image1 = "test_images/mirror.jpg"
+# mirror(image1, "test_images/mirror.jpg")
+# image1 = "test_images/mirror.jpg"
 #image1 = 'test_images/mirror.jpg'
 
 resized = cv2.imread(image1)
@@ -304,7 +300,7 @@ for c in cnts:
     cX = int((M["m10"] / M["m00"]) * ratio)
     cY = int((M["m01"] / M["m00"]) * ratio)
 
-	#print(cX, cY)
+    # print(cX, cY)
     shape = sd.detect(c)
 	# multiply the contour (x, y)-coordinates by the resize ratio,
 	# then draw the contours and the name of the shape on the image
