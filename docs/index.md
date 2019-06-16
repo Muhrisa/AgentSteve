@@ -33,8 +33,17 @@ Finally, after a lot of hard work and patience, Steve had made it! He began his 
 https://github.com/muhrisa/ArchitectSteve
 
 ## Other Resources Used
-__Python Programming Language:__ it's easy to learn and use Python. https://www.python.org/downloads/
+__Python Programming Language:__ it's easy to learn and use Python. 
+
+https://www.python.org/downloads/
 
 __Malmo:__ a platform for Artificial Intelligence experimentation and research built on top of Minecraft. An essential part of this project so you don't have to build or install platform dependent code.
+
 https://github.com/Microsoft/malmo
+
+__Deep Reinforcement Learning with Model Learning and Monte Carlo Tree Search in Minecraft:__ How to place blocks in Minecraft.
+
+https://arxiv.org/pdf/1803.08456.pdf
+
+https://thenextweb.com/artificial-intelligence/2018/03/23/watch-this-ai-figure-out-how-to-place-blocks-in-minecraft/
 
