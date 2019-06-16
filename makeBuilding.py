@@ -19,7 +19,7 @@ import numpy as np
 import math
 from scipy.interpolate import interp1d
 
-image_file = "test_images/empire_state.png"
+image_file = "test_images/test3.jpg"
 pixle_list = gc.image_change(image_file)
 
 
@@ -168,7 +168,7 @@ def placeBottom(area):      #area returned from shrink()
         xt = interp1d([cxrange[0], cxrange[1]], [xrange[0], xrange[1]])
         yt = interp1d([cyrange[0], cyrange[1]], [yrange[0], yrange[1]])
         for c in area:
-            print("ranges:", xrange, yrange, cxrange, cyrange)
+            # print("ranges:", xrange, yrange, cxrange, cyrange)
             print(pixle_list[(c[0]+yrange[0])][c[1] + xrange[0]], c[0], c[1])
             x = int(yt(c[1]))
             y = int(xt(c[0]))
@@ -231,7 +231,7 @@ def getAxis(image):
 
     return cX
 
-def mirror(image):
+def mirror(image, str):
     axis = getAxis(image)
     im = cv2.imread(image, cv2.IMREAD_COLOR)
 
@@ -248,7 +248,7 @@ def mirror(image):
             if cy <= axis:
                 newImage[cx][cy] = im[cx][cy]
             if cy > axis:
-                print(cx, cy, temp.shape)
+                # print(cx, cy, temp.shape)
                 newImage[cx][cy] = newImage[cx][axis-count]
                 count+=1
 
@@ -269,7 +269,8 @@ def mirror(image):
 divNum = 8
 
 image1 = "bw_flipped.jpg"
-mirror(image1)
+mirror(image1, "test_images/mirror.jpg")
+image1 = "test_images/mirror.jpg"
 #image1 = 'test_images/mirror.jpg'
 
 resized = cv2.imread(image1)
@@ -312,7 +313,7 @@ for c in cnts:
     c = c.astype("int")
     cv2.drawContours(image, [c], -1, (0, 255, 0), 2)
     cv2.putText(image, shape, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
-    print(cX, cY)
+    # print(cX, cY)
 	# show the output image
     # cv2.imshow("Image", image)
     cv2.waitKey(0)
