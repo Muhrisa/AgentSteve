@@ -19,9 +19,7 @@ import numpy as np
 import math
 from scipy.interpolate import interp1d
 
-image_file = "test_images/willis.JPG"
-pixle_list = gc.image_change(image_file)
-
+image_file = "test_images/willis.jpg"
 
 def doXML(area):
     missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -174,7 +172,6 @@ def placeBottom(area):      #area returned from shrink()
             for z in range(1,len(ylist)*div):
                 if cyf <= ylist[z//div]:
                     returnString += pick_string(c[0], cyf, z, color_fit)
-        print(returnString)
         return returnString
 
 def shrink(pts):
@@ -201,8 +198,7 @@ def counting(pts, rev = False):
         return Ylist
 
 def getAxis(image):
-    image1 = "bw_flipped.jpg"
-    resized = cv2.imread(image1)
+    resized = cv2.imread(image)
     image = resized
     ratio = 1
 
@@ -214,47 +210,53 @@ def getAxis(image):
 
     # find contours in the thresholded image and initialize the
     # shape detector
-    cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
-                            cv2.CHAIN_APPROX_SIMPLE)
+    cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     start = cnts[0][0]
     cnts = imutils.grab_contours(cnts)
+
     sd = ShapeDetector()
+    max_Y = [0,0]
+    min_X = [2000,0]
 
     for c in cnts:
         M = cv2.moments(c)
         cX = int((M["m10"] / M["m00"]) * ratio)
-        # cY = int((M["m01"] / M["m00"]) * ratio)
+        cY = int((M["m01"] / M["m00"]) * ratio)
+        ogArea = sd.getArea(c, image.shape[0], image.shape[1], start)
+        xrange = (min(ogArea)[0], max(ogArea)[0])
+        yrange = (min(ogArea, key=lambda y: y[1])[1], max(ogArea, key=lambda y: y[1])[1])
 
-    return cX
+        if xrange[0] < min_X[0]:
+            min_X = xrange
+        if yrange[1] > max_Y[1]:
+            max_Y = yrange
+
+    print(min_X, max_Y, cX, cY, image.shape)
+    axis = min_X[0] + max_Y[0]
+    ratio = axis / image.shape[1]
+    return (axis, ratio)
 
 def mirror(image, str):
-    axis = getAxis(image)
+    axis = getAxis(image)[0]
     im = cv2.imread(image, cv2.IMREAD_COLOR)
-
-    print("axis: ", axis)
-    # im = [[[1],[10]],[[2],[20]],[[3],[30]],[[4],[40]],[[5],[50]],[[6],[60]]]
-    # axis = 4
-    temp = im[:,:axis]
-    temp = np.flip(temp,1)
     newImage = np.zeros(im.shape)
+    print("axis: ", axis)
 
-    for cx, x in enumerate(newImage):
-        count = 1
-        for cy, y in enumerate(x):
-            if cy <= axis:
-                newImage[cx][cy] = im[cx][cy]
-            if cy > axis:
-                # print(cx, cy, temp.shape)
-                newImage[cx][cy] = newImage[cx][axis-count]
-                count+=1
+    for xcount, x in enumerate(newImage):
+        for ycount, y in enumerate(x):
+            x, y = mapSymmetricPixel(axis, xcount, ycount, im.shape)
+            print(x,y)
+            newImage[xcount][ycount] = im[x][y]
 
-
-    # print(im2.size)
+    cv2.line(newImage, (axis, 0), (axis, 500), (255, 0, 0), 5)
     cv2.imshow("symmetric image", newImage)
-    cv2.imwrite('test_images/mirror.jpg', newImage)
+    cv2.imwrite(str, newImage)
     return newImage
 
-
+def mapSymmetricPixel(axis, x, y, shape):
+    if y < axis or x >= shape[1] or y >= shape[0]:
+        return x,y
+    return x, axis - (y - axis)
 
 # construct the argument parse and parse the arguments
 #
@@ -265,16 +267,16 @@ def mirror(image, str):
 divNum = 8
 
 image1 = "bw_flipped.jpg"
-# mirror(image1, "test_images/mirror.jpg")
-# image1 = "test_images/mirror.jpg"
-#image1 = 'test_images/mirror.jpg'
-
+mirror(image1, "test_images/mirror.jpg")
+image1 = 'test_images/mirror.jpg'
+# gc.image_change('test_images/mirror.jpg')
 resized = cv2.imread(image1)
 
 # resized = makeSymmetrical(image1)
 image = resized
 ratio = 1
 
+pixle_list = gc.image_change(image_file)
 # convert the resized image to grayscale, blur it slightly,
 # and threshold it
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
