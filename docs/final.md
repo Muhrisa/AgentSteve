@@ -13,9 +13,13 @@ The result is a 3D appropriately colored block replica, in the Minecraft world e
 
 ## Approaches
 We begin by selecting an image of a building using a quick Google Search. Using the GrabCut algorithm, which is an image segmentation method based on graph cuts. The GrabCut uses OpenCV and Python in order to successfully automate a background removing subrouting for our images. Before we settled down on the GrabCut, we experimented with other ways of removing the background from an image, but these ways proved to only work significantly well a fraction of the time. The image segmentation works well for relatively simple images. In a nutshell, the GrabCut image segmentation algorithm works as follows:
+
 __1.__ apply a Gaussian Blur in order to reduce the noise in the original image
+
 __2.__ run an edge detection subroutine, either a Sobel or Scharr gradient operators, on the image
+
 __3.__ reduce the noise on the image by zeroing any value that is less than the mean of all the intensities that results from the edge detection algorithm
+
 __4.__ run a contour detection subroutine over the edge detected image result and then smoothen the final contour
 
 In order to retrieve the RGB colors, we use the original image but first we flip the image. This is due to the fact that the objects were being built upside down in Minecraft whenever we passed the image in it's orginal upright orientation. Using this flipped image, we convert that image, using OpenCV, into a series of RGB values for each of the pixels in the image.
