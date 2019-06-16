@@ -19,7 +19,9 @@ import numpy as np
 import math
 from scipy.interpolate import interp1d
 
-image_file = "test2.jpg"
+image_file = "test_images/empire_state.png"
+pixle_list = gc.image_change(image_file)
+
 
 def doXML(area):
     missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
@@ -113,8 +115,7 @@ def closestColor(pixel, colorDict):
     #print(resultColor, pixel)
     #difList.append(minDif)
     return resultColor
-
-#from https://github.com/Alex561/Sketchy-AI/blob/master/minecraftBuilder.py
+    # from https://github.com/Alex561/Sketchy-AI/blob/master/minecraftBuilder.py
 
 def getPixel(x,y):
     num = math.sqrt(divNum)
@@ -137,14 +138,11 @@ def getPixel(x,y):
 
     return[r//count,g//count,b//count]
 
-
-
 def pick_string(x_num, y_num, z_num, bestColor):
     if bestColor in colors.woolList:
         return '<DrawBlock x="{0}" y="{1}" z="{2}" type="wool" colour="{3}"/>\n'.format(x_num, y_num+7, z_num, bestColor)
     else:
         return '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(x_num, y_num+7, z_num, bestColor)
-
 
 def placeBottom(area):      #area returned from shrink()
         div = 1
@@ -156,20 +154,11 @@ def placeBottom(area):      #area returned from shrink()
         returnString = ""
         num = len(ylist)*div
         z = 0
-        #color_fit = closestColor(pixle_list[c[0]][c[1]], colors.colorDict)
-        """for c in area:
-            for z in range(1,len(ylist)*div):
-                if c[1] <= ylist[z//div]:
-                    returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z, "diamond_block")"""
-
-        # xratio = max(list(area), lambda i: i[0])[0] // pixle_list.shape[0]
-        # yratio = max(list(area), lambda i: i[1])[1] // pixle_list.shape[1]
         np.set_printoptions(linewidth=np.inf)
-        # for c,i in enumerate(pixle_list):
-        #     print(i.tolist())
-        #     print(c,"\n")
+
         xrange = (min(ogArea)[0], max(ogArea)[0])
         yrange = (min(ogArea, key=lambda y: y[1])[1], max(ogArea, key=lambda y: y[1])[1])
+
         xdif = xrange[1]-xrange[0]
         ydif = yrange[1]-yrange[0]
         cxrange = (min(list(area))[0], max(list(area))[0])
@@ -184,16 +173,11 @@ def placeBottom(area):      #area returned from shrink()
             x = int(yt(c[1]))
             y = int(xt(c[0]))
             color_fit = closestColor(getPixel(x,y), colors.colorDict)
-            returnString += pick_string(c[0], c[1], (len(ylist)*div)//2, color_fit)
+            cyf = c[1] - cyrange[0]
+            returnString += pick_string(c[0], cyf, (len(ylist)*div)//2, color_fit)
             for z in range(1,len(ylist)*div):
-                if c[1] <= ylist[z//div]:
-                    returnString += pick_string(c[0], c[1], z, color_fit)
-        """for c in area:
-            for z in range(len(add)*div):
-                if c[1] <= add[z//div]:
-                    returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z+num+1, "diamond_block")
-                    #if z != 0:
-                        #returnString += '<DrawBlock x="{0}" y="{1}" z="{2}" type="{3}"/>\n'.format(c[0], c[1]+8, z+(len(ylist)*3), "diamond_block")"""
+                if cyf <= ylist[z//div]:
+                    returnString += pick_string(c[0], cyf, z, color_fit)
 
         return returnString
 
@@ -220,38 +204,78 @@ def counting(pts, rev = False):
         Ylist.sort(reverse = rev)
         return Ylist
 
-def black_and_white_dithering(input_image_path, output_image_path, dithering=False):
-    color_image = Image.open(input_image_path)
-    if dithering:
-        bw = color_image.convert('1')  
-    else:
-        bw = color_image.convert('1', dither=Image.NONE)
-    bw.save(output_image_path)
+def getAxis(image):
+    image1 = "bw_flipped.jpg"
+    resized = cv2.imread(image1)
+    image = resized
+    ratio = 1
 
+    # convert the resized image to grayscale, blur it slightly,
+    # and threshold it
+    gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    thresh = cv2.threshold(blurred, 60, 255, cv2.THRESH_BINARY)[1]
+
+    # find contours in the thresholded image and initialize the
+    # shape detector
+    cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
+                            cv2.CHAIN_APPROX_SIMPLE)
+    start = cnts[0][0]
+    cnts = imutils.grab_contours(cnts)
+    sd = ShapeDetector()
+
+    for c in cnts:
+        M = cv2.moments(c)
+        cX = int((M["m10"] / M["m00"]) * ratio)
+        # cY = int((M["m01"] / M["m00"]) * ratio)
+
+    return cX
+
+def mirror(image):
+    axis = getAxis(image)
+    im = cv2.imread(image, cv2.IMREAD_COLOR)
+
+    print("axis: ", axis)
+    # im = [[[1],[10]],[[2],[20]],[[3],[30]],[[4],[40]],[[5],[50]],[[6],[60]]]
+    # axis = 4
+    temp = im[:,:axis]
+    temp = np.flip(temp,1)
+    newImage = np.zeros(im.shape)
+
+    for cx, x in enumerate(newImage):
+        count = 1
+        for cy, y in enumerate(x):
+            if cy <= axis:
+                newImage[cx][cy] = im[cx][cy]
+            if cy > axis:
+                print(cx, cy, temp.shape)
+                newImage[cx][cy] = newImage[cx][axis-count]
+                count+=1
+
+
+    # print(im2.size)
+    cv2.imshow("symmetric image", newImage)
+    cv2.imwrite('test_images/mirror.jpg', newImage)
+    return newImage
 
 
 
 # construct the argument parse and parse the arguments
-#ap = argparse.ArgumentParser()
-#ap.add_argument("-i", "--image", required=True,
-	#help="path to the input image")
-#args = vars(ap.parse_args())
+#
 
 # load the image and resize it to a smaller factor so that
 # the shapes can be approximated better
-#black_and_white_dithering('one.png', "two.png")
-#divNum = 10
-#image = cv2.imread("esb2.png")
-#pixle_list = gc.image_change("testing1.png")
+#
 divNum = 8
-pixle_list = gc.image_change(image_file)
-resized = cv2.imread("bw_flipped.jpg")
-# for l in pixle_list:
-#     print(l)
 
+image1 = "bw_flipped.jpg"
+mirror(image1)
+#image1 = 'test_images/mirror.jpg'
+
+resized = cv2.imread(image1)
+
+# resized = makeSymmetrical(image1)
 image = resized
-#resized = imutils.resize(image, width=300)
-#ratio = image.shape[0] / float(resized.shape[0])
 ratio = 1
 
 # convert the resized image to grayscale, blur it slightly,
@@ -268,44 +292,29 @@ start = cnts[0][0]
 cnts = imutils.grab_contours(cnts)
 sd = ShapeDetector()
 
-# loop over the contours
 for c in cnts:
 	# compute the center of the contour, then detect the name of the
 	# shape using only the contour
-	#for x in c:
-               # print(x)
     M = cv2.moments(c)
-
-	#d = M["m00"]
-	#for k,v in M.items():
-                #print(k, (v/d)*ratio)
     total = c
     cord = sd.getPoints(c, start)
-	#imageWidth =
     ogArea = sd.getArea(c, image.shape[0], image.shape[1], start)
     ar = shrink(ogArea)
-
-    #ar = shrink(sd.getArea(c, image.shape[0], image.shape[1], start))
-	# print(ar)
-	# print(len(cord))
-	# print("LEN: ",len(ar))
     cX = int((M["m10"] / M["m00"]) * ratio)
     cY = int((M["m01"] / M["m00"]) * ratio)
+
 	#print(cX, cY)
     shape = sd.detect(c)
-
 	# multiply the contour (x, y)-coordinates by the resize ratio,
 	# then draw the contours and the name of the shape on the image
     c = c.astype("float")
     c *= ratio
     c = c.astype("int")
     cv2.drawContours(image, [c], -1, (0, 255, 0), 2)
-	#print(shape)
-    cv2.putText(image, shape, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX,
-		0.5, (255, 255, 255), 2)
-
+    cv2.putText(image, shape, (cX, cY), cv2.FONT_HERSHEY_SIMPLEX,0.5, (255, 255, 255), 2)
+    print(cX, cY)
 	# show the output image
-    cv2.imshow("Image", image)
+    # cv2.imshow("Image", image)
     cv2.waitKey(0)
     # print(pixle_list.shape, len(ar))
     doXML(ar)
