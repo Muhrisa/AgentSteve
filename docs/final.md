@@ -49,8 +49,7 @@ We initially thought of breaking down the buildings into shapes and using OpenCV
 ![BW](https://i.imgur.com/Plzw845.png)
 ![2dPic](https://i.imgur.com/eJpJmCv.png)
 
-Next, we thought about how we could turn our 2D object into 3D object in Minecraft.
-We realized that if a building was symmetrical all around then by expanding the corners of the 2D object, the result would be a 3D building.  We made this possible by finding the corner Y coordinates into an array. We would then build for z in range length of Y corner arrays. For each z, the section of the 2D array that was less than the current Y from the Y corners array would get built, which leads the 3D construction of 2D models. 
+To create a structure from our 2D matrix, we leveraged symmetry to create a layered depth effect. This algorithm is dependent on the accuracy of the outline we are able to extract which represents the shape of the building's facade. A total of n blocks are detected in the outline which form discrete vertical phases of the goal structure; each detected block will represent a unique depth layer. The center of the structure will contain all detected blocks and will represent the highest point of the building. This layer will be sandiched between between a second layer which contains n-1 blocks because the topmost block is removed. This process continues as the layers cascade to the shortest layer, thus forming our 3D structure.
 
 ![sideOne](https://i.imgur.com/nYl1KPN.png)
 ![sideTwo](https://i.imgur.com/kqPHHhJ.png)
@@ -60,6 +59,7 @@ __Qualitative Evaluation:__ ArchitectSteve does not attempt to produce an exact 
 
 Our evaluation criteria is primarily focused on the qualitative factors, measured by the quality, size and appearance  of the building our algorithm created. To assess this part of the evaluation we perform a simple visual comparison between the 3D Minecraft colored block replica and the original 2D image. The dimension, depth, and color are three of the criteria we focused on, in order to create a much more realistic structure. As a result of the peer grading, we received positive feedback from other students solely on our accuracy of the building structure replication using only diamond blocks. 
 
+![Outline Extraction](images/outline 3 image.png)
 
 __Quantitative Evaluation:__ The evaluation criteria also includes a quantitative assessment that is the focused on the extent of building images that it can successfully build replicas of. With the algorithm we have in place we are able to work with geometric structures that often resemble some kind of symmetry. We compare the results of asymmetrical building images and their replicas to symmetrical building images and the number of successful replicas is a lot higher for symmetrical structures.
 
