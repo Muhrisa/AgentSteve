@@ -12,7 +12,11 @@ ArchitectSteve is a tool that takes a 2D image provided by the user and construc
 The result is a 3D appropriately colored block replica, in the Minecraft world environment, of the 2D building image that was “uploaded” to ArchitectSteve. Of course, due to the height restriction of 256 blocks that exists in Minecraft due to the fact that the Minecraft world is made of 16x16x256 'chunks’, we would resize the image so that the replicated structure would not be cutoff. The 2D building-view image also gets translated in order for the resulting replica to be perceived as having depth in Minecraft, thus having a 3D pop-up structure.
 
 ## Approaches
-We begin by selecting an image of a building using a quick Google Search. Using the GrabCut algorithm, which is an image segmentation method based on graph cuts.
+We begin by selecting an image of a building using a quick Google Search. Using the GrabCut algorithm, which is an image segmentation method based on graph cuts. The GrabCut uses OpenCV and Python in order to successfully automate a background removing subrouting for our images. Before we settled down on the GrabCut, we experimented with other ways of removing the background from an image, but these ways proved to only work significantly well a fraction of the time. The image segmentation works well for relatively simple images. In a nutshell, the GrabCut image segmentation algorithm works as follows:
+1. apply a Gaussian Blur in order to reduce the noise in the original image
+2. run an edge detection subroutine, either a Sobel or Scharr gradient operators, on the image
+3. reduce the noise on the image by zeroing any value that is less than the mean of all the intensities that results from the edge detection algorithm
+4. run a contour detection subroutine over the edge detected image result and then smoothen the final contour
 
 Then using the shape detection, we loaded the resultant image from the GrabCut algorithm, a binary image, to analyze and identify the shapes via shape detection. We are using OpenCV’s shape contouring and detection functions. OpenCV recognizes shapes due to the difference in contrast, which is why we decided to pass in completely black and white photos. 
 
@@ -54,3 +58,5 @@ http://enthusiaststudent.blogspot.com/2015/01/horizontal-and-vertical-flip-using
 
 __GrabCut:__ Background Removing algorithm.
 https://en.wikipedia.org/wiki/GrabCut
+https://www.codepasta.com/computer-vision/2016/11/06/background-segmentation-removal-with-opencv.html
+https://www.codepasta.com/computer-vision/2019/04/26/background-segmentation-removal-with-opencv-take-2.html
