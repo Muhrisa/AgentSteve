@@ -12,15 +12,27 @@ ArchitectSteve is a tool that takes a 2D image provided by the user and construc
 The result is a 3D appropriately colored block replica, in the Minecraft world environment, of the 2D building image that was “uploaded” to ArchitectSteve. Of course, due to the height restriction of 256 blocks that exists in Minecraft due to the fact that the Minecraft world is made of 16x16x256 'chunks’, we would resize the image so that the replicated structure would not be cutoff. The 2D building-view image also gets translated in order for the resulting replica to be perceived as having depth in Minecraft, thus having a 3D pop-up structure.
 
 ## Approaches
-We begin by selecting an image of a building using a quick Google Search. Using the GrabCut algorithm, which is an image segmentation method based on graph cuts. The GrabCut uses OpenCV and Python in order to successfully automate a background removing subrouting for our images. Before we settled down on the GrabCut, we experimented with other ways of removing the background from an image, but these ways proved to only work significantly well a fraction of the time. The image segmentation works well for relatively simple images. In a nutshell, the GrabCut image segmentation algorithm works as follows:
+We begin by selecting an image of a building using a quick Google Search. Using the GrabCut algorithm, which is an image segmentation method based on graph cuts. The GrabCut uses OpenCV and Python in order to successfully automate a background removing subrouting for our images. Before we settled down on the GrabCut, we experimented with other ways of removing the background from an image, but these ways proved to only work significantly well a fraction of the time. The image segmentation works well for relatively simple images. We tried two relatively distinct GrabCut image segmentation approaches that work as follows:
 
-__1.__ apply a Gaussian Blur in order to reduce the noise in the original image
+__Approach #1:__
+__1.__ apply a Gaussian Blur in order to reduce the noise in the original image, so that the noise in the edge detection is reduced
 
 __2.__ run an edge detection subroutine, either a Sobel or Scharr gradient operators, on the image
 
 __3.__ reduce the noise on the image by zeroing any value that is less than the mean of all the intensities that results from the edge detection algorithm
 
 __4.__ run a contour detection subroutine over the edge detected image result and then smoothen the final contour
+
+__Approach #2:__
+__1.__ apply a Gaussian Blur in order to reduce the noise in the original image, so that the noise in the edge detection is reduced
+
+__2.__ run an edge detection subroutine using a structured forest for fast edge detection
+
+__3.__ reduce the noise on the image by using median filters
+
+__4.__ run a contour detection subroutine over the edge detected image result, finding the largest, most siginificant outer-most contour
+
+<img src="images/Samples/Colosium/col copy.jpg" width="450" height="300">
 
 In order to retrieve the RGB colors, we use the original image but first we flip the image. This is due to the fact that the objects were being built upside down in Minecraft whenever we passed the image in it's orginal upright orientation. Using this flipped image, we convert that image, using OpenCV, into a series of RGB values for each of the pixels in the image.
 
@@ -76,3 +88,6 @@ https://www.codepasta.com/computer-vision/2019/04/26/background-segmentation-rem
 __SketchyAI:__ Recreating images in Minecraft project created by Alex Chapp, Katherine Fitzpatrick, and Edwin Ho during the Spring of 2017.
 
 https://alex561.github.io/Sketchy-AI/final.html
+
+__Structured Forests:__ For the purpose of edge detection using machine learning from the OpenCV contribution below.
+https://docs.opencv.org/3.1.0/d0/da5/tutorial_ximgproc_prediction.html
