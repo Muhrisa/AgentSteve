@@ -2,8 +2,8 @@
 layout: default
 title:  Home
 ---
-## First Video Summary
-<iframe width="560" height="315" src="https://www.youtube.com/embed/Dd0KOZKiN7k" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+## Video Summary
+<iframe width="560" height="315" src="https://www.youtube.com/embed/k5p1342nWVI" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Project Summary
 ArchitectSteve is a tool that takes a 2D image provided by the user and constructs a replica of the building in Minecraft but in 3D form. Steve, our intelligent “agent” as we call our tool takes the image and processes that image into a series of what we loosely will call coordinates, making it easier to work in Malmo Minecraft, but can be seen as the list of vertices that determine the shape of the object. This subroutine is made possible using the external OpenCV shape detection resource from the pyimagesearch website. The ArchitectSteve takes the 2D image and processes the image into a series of pixels (i.e., R{0-255} G{0-255} B{0-255}). In addition, we added a colors dictionary of possible Minecraft blocks as seen and described from the website minecraft-ids.grahamedgecombe.com where the official names and coloring was taken from. ArchitectSteve with the use of the colors dictionary to measure or estimate the similarity of each pixel from the 2D image that ArchitectSteve took and basically determine the closest Minecraft block type and color to use when creating the 3D structure.
