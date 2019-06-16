@@ -19,7 +19,7 @@ import numpy as np
 import math
 from scipy.interpolate import interp1d
 
-image_file = "test_images/seagram.JPG"
+image_file = "test_images/willis.JPG"
 pixle_list = gc.image_change(image_file)
 
 
