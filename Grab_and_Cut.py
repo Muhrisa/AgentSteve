@@ -111,3 +111,14 @@ def image_change(pic):
 
     #print(image_to_array("testing1.png"))
 
+
+
+
+
+def black_and_white_dithering(input_image_path, output_image_path, dithering=False):
+    color_image = Image.open(input_image_path)
+    if dithering:
+        bw = color_image.convert('1')
+    else:
+        bw = color_image.convert('1', dither=Image.NONE)
+    bw.save(output_image_path)

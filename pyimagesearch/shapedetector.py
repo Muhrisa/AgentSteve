@@ -38,6 +38,7 @@ class ShapeDetector:
 
 		# return the name of the shape
 		return shape
+
 	def getPoints(self, c, start):
                 pts = []
                 startX = start[0]
