@@ -13,10 +13,12 @@ The result is a 3D appropriately colored block replica, in the Minecraft world e
 
 ## Approaches
 We begin by selecting an image of a building using a quick Google Search. Using the GrabCut algorithm, which is an image segmentation method based on graph cuts. The GrabCut uses OpenCV and Python in order to successfully automate a background removing subrouting for our images. Before we settled down on the GrabCut, we experimented with other ways of removing the background from an image, but these ways proved to only work significantly well a fraction of the time. The image segmentation works well for relatively simple images. In a nutshell, the GrabCut image segmentation algorithm works as follows:
-1. apply a Gaussian Blur in order to reduce the noise in the original image
-2. run an edge detection subroutine, either a Sobel or Scharr gradient operators, on the image
-3. reduce the noise on the image by zeroing any value that is less than the mean of all the intensities that results from the edge detection algorithm
-4. run a contour detection subroutine over the edge detected image result and then smoothen the final contour
+__1.__ apply a Gaussian Blur in order to reduce the noise in the original image
+__2.__ run an edge detection subroutine, either a Sobel or Scharr gradient operators, on the image
+__3.__ reduce the noise on the image by zeroing any value that is less than the mean of all the intensities that results from the edge detection algorithm
+__4.__ run a contour detection subroutine over the edge detected image result and then smoothen the final contour
+
+In order to retrieve the RGB colors, we use the original image but first we flip the image. This is due to the fact that the objects were being built upside down in Minecraft whenever we passed the image in it's orginal upright orientation. Using this flipped image, we convert that image, using OpenCV, into a series of RGB values for each of the pixels in the image.
 
 Then using the shape detection, we loaded the resultant image from the GrabCut algorithm, a binary image, to analyze and identify the shapes via shape detection. We are using OpenCV’s shape contouring and detection functions. OpenCV recognizes shapes due to the difference in contrast, which is why we decided to pass in completely black and white photos. 
 
@@ -34,29 +36,45 @@ We realized that if a building was symmetrical all around then by expanding the 
 ![sideTwo](https://i.imgur.com/kqPHHhJ.png)
 
 ## Evaluation
-Our evaluation criteria is primarily focused on the qualitative, measured by the quality, size and appearance  of the building our algorithm created. At its essence we are trying to answer the following evaluation question: does the 3D Minecraft representation of the building look like the original 2D image of the building? To assess this part of the evaluation we perform a simple visual comparison between the 3D Minecraft colored block replica and the original colored 2D image. The dimension and depth are two of the criteria we focused on, in order to create a much more realistic structure. As a result of the peer grading, we received positive feedback from other students solely on our accuracy of the building structure replication using only diamond blocks.
+__Qualitative Evaluation:__ Our evaluation criteria is primarily focused on the qualitative factors, measured by the quality, size and appearance  of the building our algorithm created. At its essence we are trying to answer the following evaluation question: _does the 3D Minecraft representation of the building look like the original 2D image of the building?_ 
 
-The evaluation criteria also includes a quantitative assessment that is the focused on the extent of building images that it can successfully build replicas of. With the algorithm we have in place we are able to work with geometric structures that often resemble some kind of symmetry. We compare the results of asymmetrical building images and their replicas to symmetrical building images and the number of successful replicas is a lot higher for symmetrical structures.
+To assess this part of the evaluation we perform a simple visual comparison between the 3D Minecraft colored block replica and the original 2D image. The dimension, depth, and color are three of the criteria we focused on, in order to create a much more realistic structure. As a result of the peer grading, we received positive feedback from other students solely on our accuracy of the building structure replication using only diamond blocks. Although now the structure is not solely made from diamond blocks, but similar colored blocks as the pixel RGB values from the image's pixels.
+
+__Quantitative Evaluation:__ The evaluation criteria also includes a quantitative assessment that is the focused on the extent of building images that it can successfully build replicas of. With the algorithm we have in place we are able to work with geometric structures that often resemble some kind of symmetry. We compare the results of asymmetrical building images and their replicas to symmetrical building images and the number of successful replicas is a lot higher for symmetrical structures.
 
 ## Refrences
 __Deep Reinforcement Learning with Model Learning and Monte Carlo Tree Search in Minecraft:__ How to place blocks in Minecraft.
+
 https://arxiv.org/pdf/1803.08456.pdf
+
 https://thenextweb.com/artificial-intelligence/2018/03/23/watch-this-ai-figure-out-how-to-place-blocks-in-minecraft/
 
 __Imutils:__ image processing functions such as translation, rotation, resizing, skeletonization, sorting contours and detecting edges with OpenCV and Python 3.
+
 https://pypi.org/project/imutils/
 
 __OpenCV Shape Detection:__ identify the contour or the outline of the shape using contour approximation in order to carry out shape detection. This approximation algorithm is commonly known as the Ramer-Douglas-Peucker algorithm. This essentially reduces the number of points on a curve or line to a simplified approximated version.
+
 https://pypi.org/project/opencv-python/
+
 https://www.pyimagesearch.com/2016/02/08/opencv-shape-detection/
 
 __Minecraft Selfies:__ This resource is simlar to the Sketchy AI project that was created during the Spring of 2017 by Alex Chapp, Katherine Fitzpatrick, and Edwin Ho. The inspiration we drew from it, similar to the Sketchy AI, is the idea of rendering an image's colors in the form of pixels into Minecraft 3D structures. Reading through this resource we learned how to convert images into RGB values.
+
 https://projects.raspberrypi.org/en/projects/minecraft-selfies/
 
 __Resize Image:__ This was referenced when it came down to resizing the image due to the fact that Minecraft has a vertical limit, as explained above, therefore we had to resize or face an unexpected cutoff image as a result.
+
 http://enthusiaststudent.blogspot.com/2015/01/horizontal-and-vertical-flip-using.html
 
 __GrabCut:__ Background Removing algorithm.
+
 https://en.wikipedia.org/wiki/GrabCut
+
 https://www.codepasta.com/computer-vision/2016/11/06/background-segmentation-removal-with-opencv.html
+
 https://www.codepasta.com/computer-vision/2019/04/26/background-segmentation-removal-with-opencv-take-2.html
+
+__SketchyAI:__ Recreating images in Minecraft project created by Alex Chapp, Katherine Fitzpatrick, and Edwin Ho during the Spring of 2017.
+
+https://alex561.github.io/Sketchy-AI/final.html
