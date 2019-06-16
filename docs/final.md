@@ -16,9 +16,12 @@ ArchitectSteve processes the 2D image into a series of pixels (i.e., R{0-255} G{
 The result is a 3D appropriately colored block replica, in the Minecraft world environment, of the 2D building image that was “uploaded” to ArchitectSteve. Of course, due to the height restriction of 256 blocks that exists in Minecraft due to the fact that the Minecraft world is made of 16x16x256 'chunks’, we would resize the image so that the replicated structure would not be cutoff. The 2D building-view image also gets translated in order for the resulting replica to be perceived as having depth in Minecraft, thus having a 3D pop-up structure.
 
 ## Approaches
-We begin by selecting an image of a building using a quick Google Search. Using the GrabCut algorithm, which is an image segmentation method based on graph cuts. The GrabCut uses OpenCV and Python in order to successfully automate a background removing subrouting for our images. Before we settled down on the GrabCut, we experimented with other ways of removing the background from an image, but these ways proved to only work proficiently a fraction of the time. The image segmentation works well for relatively simple images. We tried two relatively distinct GrabCut image segmentation approaches that work as follows:
+We begin by selecting an image of a building using a quick Google Search. The GrabCut or Grab and Cut algorithm, an image segmentation method based on graph cuts, uses OpenCV and Python in order to successfully automate a background removing subrouting for our images. 
+
+Before we settled down on the GrabCut, we experimented with other ways of removing the background from an image, but these ways proved to only work proficiently a fraction of the time. The image segmentation works well for relatively simple images. We tried two relatively distinct GrabCut image segmentation approaches, but ultimately used approach #2, that work as follows:
 
 __Approach #1:__
+
 __1.__ apply a Gaussian Blur in order to reduce the noise in the original image, so that the noise in the edge detection is reduced
 
 __2.__ run an edge detection subroutine, either a Sobel or Scharr gradient operators, on the image
@@ -28,9 +31,10 @@ __3.__ reduce the noise on the image by zeroing any value that is less than the 
 __4.__ run a contour detection subroutine over the edge detected image result and then smoothen the final contour
 
 __Approach #2:__
+
 __1.__ apply a Gaussian Blur in order to reduce the noise in the original image, so that the noise in the edge detection is reduced
 
-__2.__ run an edge detection subroutine using a structured forest for fast edge detection
+__2.__ run an edge detection subroutine to find all the edges in the image using a pre-trained structured forest model for fast edge detection
 
 __3.__ reduce the noise on the image by using median filters
 
