@@ -68,7 +68,7 @@ The crux of program is to develop an accuate outline on which the structure is t
 
 <img src="images/Samples/kristen/willis.jpg" width="450" height="300">
 
-<img src="docs/images/Samples/kristen/church.png" width="450" height="300">
+<img src="https://i.imgur.com/PRtQjMp.png" width="450" height="300">
 
 __Quantitative Evaluation:__ The evaluation criteria also includes a quantitative assessment that is the focused on the extent of building images that it can successfully build replicas of. With the algorithm we have in place we are able to work with geometric structures that often resemble some kind of symmetry. We compare the results of asymmetrical building images and their replicas to symmetrical building images and the number of successful replicas is a lot higher for symmetrical structures.
 
