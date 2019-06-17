@@ -45,8 +45,6 @@ __4.__ run a contour detection subroutine over the edge detected image result, f
 
 __5.__ approximate contour to make a more accurate background and foreground differentiation 
 
-<img src="images/Samples/Colosium/col copy.jpg" width="450" height="300">
-
 In order to retrieve the RGB colors, we use the original image but first we flip the image. This is due to the fact that the objects were being built upside down in Minecraft whenever we passed the image in it's orginal upright orientation. Using this flipped image, we convert that image, using OpenCV, into a series of RGB values for each of the pixels in the image.
 
 Using the shape detection, we then loaded the resultant image from the GrabCut algorithm, a binary image, to analyze and identify the shapes via shape detection. We are using OpenCV’s shape contouring and detection functions. OpenCV recognizes shapes due to the difference in contrast, which is why we decided to pass in completely black and white photos. 
@@ -63,7 +61,7 @@ __Qualitative Evaluation:__ ArchitectSteve does not attempt to produce an exact 
 
 Our evaluation criteria is primarily focused on the qualitative factors, measured by the quality, size and appearance  of the building our algorithm created. To assess this part of the evaluation we perform a simple visual comparison between the 3D Minecraft colored block replica and the original 2D image. The dimension, depth, and color are three of the criteria we focused on, in order to create a much more realistic structure. As a result of the peer grading, we received positive feedback from other students solely on our accuracy of the building structure replication using only diamond blocks. 
 
-![Outline Extraction](https://i.imgur.com/MtTPW8d.png)
+<img src="https://i.imgur.com/MtTPW8d.png" width="900" height="300">
 
 The crux of program is to develop an accuate outline on which the structure is to be based. We were able to evaluate the efficiency of the algorithm based on various image files generated thrughout the processing phase. The images above show an example of the outline as it is retrieved from the background removal pipeline. Because shadows, reflections, landscaping, etc. in the original photo can all significantly effect the resulting outline, additional processing is prefered to produce an outline which will more closely resemble a real building. We can observe these image files to determine whether the algorithm has produced a successful outline or not.
 
