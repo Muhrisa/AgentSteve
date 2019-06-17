@@ -16,8 +16,8 @@ ArchitectSteve processes the 2D image into a series of pixels (i.e., R{0-255} G{
 The result is a 3D appropriately colored block replica, in the Minecraft world environment, of the 2D building image that was “uploaded” to ArchitectSteve. Due to the height restriction of 256 blocks that exists in Minecraft, since the Minecraft world is made of 16x16x256 'chunks’, we resize the image so that the replicated structure would not be cutoff. The 2D building-view image also gets translated in order for the resulting replica to be perceived as having depth in Minecraft, thus having a 3D pop-up structure.
 
 ## Approaches
-<img src="https://i.imgur.com/ffZ8HxM.png" width="900" height="300">
-<img src="https://i.imgur.com/xsUe0pY.png" width="900" height="450">
+<img src="https://i.imgur.com/ffZ8HxM.png" width="500" height="300">
+<img src="https://i.imgur.com/xsUe0pY.png" width="500" height="300">
 
 We begin by selecting an image of a building using a quick Google Search. The GrabCut (Grab and Cut) algorithm, is an image segmentation method based on graph cuts, that uses OpenCV and Python in order to successfully automate a background removing subrouting for our images. 
 
