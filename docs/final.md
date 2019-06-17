@@ -65,7 +65,7 @@ __Qualitative Evaluation:__ ArchitectSteve does not attempt to produce an exact 
 
 Our evaluation criteria is primarily focused on the qualitative factors, measured by the quality, size and appearance  of the building our algorithm created. To assess this part of the evaluation we perform a simple visual comparison between the 3D Minecraft colored block replica and the original 2D image. The dimension, depth, and color are three of the criteria we focused on, in order to create a much more realistic structure. As a result of the peer grading, we received positive feedback from other students solely on our accuracy of the building structure replication using only diamond blocks. 
 
-<img src="https://i.imgur.com/MtTPW8d.png" width="1200" height="600">
+<img src="blob:https://imgur.com/935ab019-9787-464e-85ae-a7703991b00c" width="1800" height="600">
 
 The crux of the program is to develop an accuate outline on which the structure is to be based. We were able to evaluate the efficiency of the algorithm based on various image files generated thrughout the processing phase. The images above show an example of the outline as it is retrieved from the background removal pipeline. Because shadows, reflections, landscaping, etc. in the original photo can all significantly effect the resulting outline, additional processing is prefered to produce an outline which will more closely resemble a real building. We can observe these image files to determine whether the algorithm has produced a successful outline or not.
 
