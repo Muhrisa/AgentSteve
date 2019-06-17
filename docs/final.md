@@ -54,8 +54,6 @@ We initially thought of breaking down the buildings into shapes and using OpenCV
 
 To create a structure from our 2D matrix, we leveraged symmetry to create a layered depth effect. This algorithm is dependent on the accuracy of the outline we are able to extract which represents the shape of the building's facade. A total of n blocks are detected in the outline which form discrete vertical phases of the goal structure; each detected block will represent a unique depth layer. The center of the structure will contain all detected blocks and will represent the highest point of the building. This layer will be sandiched between between a second layer which contains n-1 blocks because the topmost block is removed. This process continues as the layers cascade to the shortest layer, thus forming our 3D structure.
 
-![sideOne](https://i.imgur.com/nYl1KPN.png)
-![sideTwo](https://i.imgur.com/kqPHHhJ.png)
 
 ## Evaluation
 __Qualitative Evaluation:__ ArchitectSteve does not attempt to produce an exact replica of the building captured in the original 2D image. We chose to render buildings in a Minecraft appropriate resolution rather than directly translating pixels to blocks. Additionally, we are not using external information about the specific building to transform it into a 3D structure. Because of these factors, the AI's goal is to create a building structure inspired by the photo with a facade that is recognizable to the target photo.
@@ -66,10 +64,11 @@ Our evaluation criteria is primarily focused on the qualitative factors, measure
 
 The crux of program is to develop an accuate outline on which the structure is to be based. We were able to evaluate the efficiency of the algorithm based on various image files generated thrughout the processing phase. The images above show an example of the outline as it is retrieved from the background removal pipeline. Because shadows, reflections, landscaping, etc. in the original photo can all significantly effect the resulting outline, additional processing is prefered to produce an outline which will more closely resemble a real building. We can observe these image files to determine whether the algorithm has produced a successful outline or not.
 
-![Color Comparison](https://i.imgur.com/PRtQjMp.png)
+<img src="images/Samples/kristen/tower.jpg" width="450" height="300">
 
-![tower sample](https://i.imgur.com/zewl4L6.png)
+<img src="images/Samples/kristen/willis.jpg" width="450" height="300">
 
+<img src="images/Samples/kristen/church.jpg" width="450" height="300">
 
 __Quantitative Evaluation:__ The evaluation criteria also includes a quantitative assessment that is the focused on the extent of building images that it can successfully build replicas of. With the algorithm we have in place we are able to work with geometric structures that often resemble some kind of symmetry. We compare the results of asymmetrical building images and their replicas to symmetrical building images and the number of successful replicas is a lot higher for symmetrical structures.
 
