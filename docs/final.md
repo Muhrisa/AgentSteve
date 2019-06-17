@@ -50,8 +50,7 @@ Using the shape detection, we then loaded the resultant image from the GrabCut a
 
 We initially thought of breaking down the buildings into shapes and using OpenCV’s shape recognition, but we later realized that OpenCV can return the pixel coordinates for the perimeter of any polygon using the findContours function. We created a getArea() function using OpenCV’s pointPolygonTest() To test each pixel in the image and determine if those points are or are not within the shape. getArea() thus returns every coordinate where a block should be placed in the Minecraft world as a 2D object.
 
-![BW](https://i.imgur.com/Plzw845.png)
-![2dPic](https://i.imgur.com/eJpJmCv.png)
+![3d process](https://i.imgur.com/ttsqh9S.png)
 
 To create a structure from our 2D matrix, we leveraged symmetry to create a layered depth effect. This algorithm is dependent on the accuracy of the outline we are able to extract which represents the shape of the building's facade. A total of n blocks are detected in the outline which form discrete vertical phases of the goal structure; each detected block will represent a unique depth layer. The center of the structure will contain all detected blocks and will represent the highest point of the building. This layer will be sandiched between between a second layer which contains n-1 blocks because the topmost block is removed. This process continues as the layers cascade to the shortest layer, thus forming our 3D structure.
 
