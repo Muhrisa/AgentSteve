@@ -17,6 +17,8 @@ The result is a 3D appropriately colored block replica, in the Minecraft world e
 
 ## Approaches
 <img src="https://i.imgur.com/ffZ8HxM.png" width="500" height="300">
+<img src="https://i.imgur.com/xsUe0pY.png" width="500" >
+
 
 We begin by selecting an image of a building using a quick Google Search. The GrabCut (Grab and Cut) algorithm, is an image segmentation method based on graph cuts, that uses OpenCV and Python in order to successfully automate a background removing subrouting for our images. 
 
