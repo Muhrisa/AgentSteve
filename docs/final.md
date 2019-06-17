@@ -66,7 +66,7 @@ The crux of program is to develop an accuate outline on which the structure is t
 
 <img src="https://i.imgur.com/0EHHok9.png" width="450" height="300">
 
-<img src="https://imgur.com/a/E1TdP9G" width="450" height="300">
+<img src="https://i.imgur.com/0EHHok9.png" width="450" height="300">
 
 <img src="https://i.imgur.com/PRtQjMp.png" width="450" height="300">
 
