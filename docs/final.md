@@ -73,6 +73,8 @@ The evaluation criteria also includes a quantitative assessment that is focused 
 
 <img src="https://i.imgur.com/V5onqdH.png" width="300" height="300">
 
+One evaluation method we conducted was to observe the error values of the colors chosen as Minecraft blocks vs the original pixel values in the photo. Above is a table with 9 sample images that displays the mean squared error of chosen blocks. The algorithm uses a distances equation to evaluate which building material will give the closest color to the original pixel. The error was determined by measuring the distance of the chosen pixel from the actual pixel in the photo with r,g,b values ranging from 0-255.
+
 ## References
 __Imutils:__ image processing functions such as translation, rotation, resizing, skeletonization, sorting contours and detecting edges with OpenCV and Python 3.
 
