@@ -47,7 +47,7 @@ __5.__ approximate contour to make a more accurate background and foreground dif
 
 In order to retrieve the RGB colors, we use the original image but first we flip the image. This is due to the fact that the objects were being built upside down in Minecraft whenever we passed the image in it's orginal upright orientation. Using this flipped image, we convert that image, using OpenCV, into a series of RGB values for each of the pixels in the image.
 
-Using the shape detection, we then loaded the resultant image from the GrabCut algorithm, a binary image, to analyze and identify the shapes via shape detection. We are using OpenCV’s shape contouring and detection functions. OpenCV recognizes shapes due to the difference in contrast, which is why we decided to pass in completely black and white photos. 
+Using the shape detection, we then loaded the resultant image from the GrabCut algorithm, a binary image, to analyze and identify the shapes via shape detection. We are using OpenCV’s shape contouring and detection functions. OpenCV recognizes shapes due to the difference in contrast, which is why we decided to use image processing and binarize the images so they have a white foreground against a black background.
 
 We initially thought of breaking down the buildings into shapes and using OpenCV’s shape recognition, but we later realized that OpenCV can return the pixel coordinates for the perimeter of any polygon using the findContours function. We created a getArea() function using OpenCV’s pointPolygonTest() To test each pixel in the image and determine if those points are or are not within the shape. getArea() thus returns every coordinate where a block should be placed in the Minecraft world as a 2D object.
 
