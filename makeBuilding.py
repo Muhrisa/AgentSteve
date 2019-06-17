@@ -1,6 +1,6 @@
 # USAGE
 # python detect_shapes.py --image shapes_and_colors.png
-
+# From pyimage search https://www.pyimagesearch.com/2016/02/08/opencv-shape-detection/
 # import the necessary packages
 from pyimagesearch.shapedetector import ShapeDetector
 import argparse
