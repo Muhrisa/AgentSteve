@@ -63,7 +63,7 @@ Our evaluation criteria is primarily focused on the qualitative factors, measure
 
 <img src="https://i.imgur.com/MtTPW8d.png" width="900" height="300">
 
-The crux of program is to develop an accuate outline on which the structure is to be based. We were able to evaluate the efficiency of the algorithm based on various image files generated thrughout the processing phase. The images above show an example of the outline as it is retrieved from the background removal pipeline. Because shadows, reflections, landscaping, etc. in the original photo can all significantly effect the resulting outline, additional processing is prefered to produce an outline which will more closely resemble a real building. We can observe these image files to determine whether the algorithm has produced a successful outline or not.
+The crux of the program is to develop an accuate outline on which the structure is to be based. We were able to evaluate the efficiency of the algorithm based on various image files generated thrughout the processing phase. The images above show an example of the outline as it is retrieved from the background removal pipeline. Because shadows, reflections, landscaping, etc. in the original photo can all significantly effect the resulting outline, additional processing is prefered to produce an outline which will more closely resemble a real building. We can observe these image files to determine whether the algorithm has produced a successful outline or not.
 
 <img src="https://i.imgur.com/M1mHO9U.png" width="500" height="300">
 
