@@ -1,3 +1,4 @@
+#From https://www.codepasta.com/computer-vision/2019/04/26/background-segmentation-removal-with-opencv-take-2.html
 import numpy as np
 import imutils
 import cv2
@@ -50,7 +51,7 @@ def filterOutSaltPepperNoise(edgeImg):
 #print(image_to_array("testing1.png"))
 def image_change(pic):
     src = cv2.imread(pic, 1)
-    src = imutils.resize(src, width=300)
+    src = imutils.resize(src, width=250)
 
     blurred = cv2.GaussianBlur(src, (5, 5), 0)
     blurred_float = blurred.astype(np.float32) / 255.0
@@ -110,15 +111,3 @@ def image_change(pic):
     return cv2.flip(src,0)
 
     #print(image_to_array("testing1.png"))
-
-
-
-
-
-def black_and_white_dithering(input_image_path, output_image_path, dithering=False):
-    color_image = Image.open(input_image_path)
-    if dithering:
-        bw = color_image.convert('1')
-    else:
-        bw = color_image.convert('1', dither=Image.NONE)
-    bw.save(output_image_path)
