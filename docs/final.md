@@ -59,25 +59,20 @@ To create a structure from our 2D matrix, we leveraged symmetry to create a laye
 ## Evaluation
 __Qualitative Evaluation:__ ArchitectSteve does not attempt to produce an exact replica of the building captured in the original 2D image. We chose to render buildings in a Minecraft appropriate resolution rather than directly translating pixels to blocks. Additionally, we are not using external information about the specific building to transform it into a 3D structure. The only thing that ArchitectSteve knows is what the front view of the structures look like. Because of these factors, the AI's goal is to create a building structure inspired by the photo with a facade that is recognizable to the target photo.
 
+
+<img src="https://i.imgur.com/M6RjrIh.png" width="500" height="300">
+
+
 Our evaluation criteria is primarily focused on the qualitative factors, measured by the quality, size and appearance  of the building our algorithm created. To assess this part of the evaluation we perform a simple visual comparison between the 3D Minecraft colored block replica and the original 2D image. The dimension, depth, and color are three of the criteria we focused on, in order to create a much more realistic structure. As a result of the peer grading, we received positive feedback from other students solely on our accuracy of the building structure replication using only diamond blocks. 
 
 <img src="https://i.imgur.com/MtTPW8d.png" width="900" height="300">
 
 The crux of the program is to develop an accuate outline on which the structure is to be based. We were able to evaluate the efficiency of the algorithm based on various image files generated thrughout the processing phase. The images above show an example of the outline as it is retrieved from the background removal pipeline. Because shadows, reflections, landscaping, etc. in the original photo can all significantly effect the resulting outline, additional processing is prefered to produce an outline which will more closely resemble a real building. We can observe these image files to determine whether the algorithm has produced a successful outline or not.
 
-<img src="https://i.imgur.com/M1mHO9U.png" width="500" height="300">
-
-<img src="https://i.imgur.com/0EHHok9.png" width="500" height="300">
-
-<img src="https://i.imgur.com/hjbIxiK.png" width="500" height="300">
-
-<img src="https://i.imgur.com/iWGbwuU.png" width="500" height="300">
-
-
 __Quantitative Evaluation:__ 
 The evaluation criteria also includes a quantitative assessment that is focused on the extent of building images that it can successfully build replicas of. With the algorithm we have in place we are able to work with geometric structures that often resemble some kind of symmetry. We compare the results of asymmetrical building images and their replicas to symmetrical building images. The number of successful replicas is a lot higher for symmetrical structures.
 
-<img src="https://i.imgur.com/V5onqdH.png" width="500" height="300">
+<img src="https://i.imgur.com/V5onqdH.png" width="300" height="300">
 
 ## References
 __Imutils:__ image processing functions such as translation, rotation, resizing, skeletonization, sorting contours and detecting edges with OpenCV and Python 3.
