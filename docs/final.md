@@ -75,9 +75,9 @@ The crux of the program is to develop an accuate outline on which the structure 
 
 
 __Quantitative Evaluation:__ 
-<img src="https://i.imgur.com/V5onqdH.png" width="500" height="300">
-
 The evaluation criteria also includes a quantitative assessment that is focused on the extent of building images that it can successfully build replicas of. With the algorithm we have in place we are able to work with geometric structures that often resemble some kind of symmetry. We compare the results of asymmetrical building images and their replicas to symmetrical building images. The number of successful replicas is a lot higher for symmetrical structures.
+
+<img src="https://i.imgur.com/V5onqdH.png" width="500" height="300">
 
 ## References
 __Imutils:__ image processing functions such as translation, rotation, resizing, skeletonization, sorting contours and detecting edges with OpenCV and Python 3.
